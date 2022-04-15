@@ -1,0 +1,9 @@
+.root {
+  padding: 0 15px;
+  width: 100%;
+
+  @media screen and (min-width: 600px) {
+    width: 500px;
+    backdrop-filter: blur(8px);
+  }
+}
