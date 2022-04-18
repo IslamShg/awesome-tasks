@@ -1,0 +1,23 @@
+.root {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  background-color: #21212B;
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
+
+  .burgerMenuButton {
+    .burgerMenuIcon {
+      color: #fff;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+}

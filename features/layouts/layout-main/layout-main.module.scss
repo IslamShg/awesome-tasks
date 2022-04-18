@@ -1,0 +1,10 @@
+.contentWrapper {
+  flex: 1;
+  background-color: #181820;
+
+  .content {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

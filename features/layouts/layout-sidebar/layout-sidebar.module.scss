@@ -1,0 +1,10 @@
+.root {
+  background-color: #21212B;
+  width: 250px;
+  height: 100vh;
+  transition: .4s ease-in-out;
+
+  &.hidden {
+    margin-left: -250px;
+  }
+}

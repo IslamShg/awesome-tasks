@@ -9,6 +9,7 @@ export const useCheckAuth = () => {
   const auth = getAuth()
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      // TODO: взять пользователя из firestore по uid
       console.log('зареган')
       setUser(user)
       setIsAuth(true)

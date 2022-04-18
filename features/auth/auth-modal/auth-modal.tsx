@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
-
-import classes from './auth-modal.module.scss'
-import { Button, Link, TextField } from '@mui/material'
 import { FormikProvider, useFormik } from 'formik'
-import { authValidation } from '../common'
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+
+import { authValidation, useLoginUser, useRegisterUser } from '../common'
+import classes from './auth-modal.module.scss'
 
 const authTypes = {
   signIn: 'signIn',
@@ -11,14 +18,29 @@ const authTypes = {
 }
 
 export const AuthModal = () => {
+  const [isPasswordShown, setIsPasswordShown] = useState(false)
+  const [authError, setAuthError] = useState('')
   const [authType, setAuthType] = useState(authTypes.signIn)
 
+  const { handleRegister } = useRegisterUser()
+  const { handleLogin } = useLoginUser()
+
   const formik = useFormik({
-    onSubmit: () => {},
     validationSchema: authValidation,
     initialValues: {
       email: '',
       password: ''
+    },
+    onSubmit: async ({ email, password }) => {
+      const handleAuth =
+        authType === authTypes.signIn ? handleLogin : handleRegister
+      const { errorText } = await handleAuth({ email, password })
+
+      if (errorText) {
+        setAuthError(errorText)
+        formik.setFieldError('password', errorText)
+        console.log('error')
+      }
     }
   })
 
@@ -37,10 +59,23 @@ export const AuthModal = () => {
         <TextField
           placeholder="Password"
           name="password"
+          type={isPasswordShown ? 'text' : 'password'}
           onChange={formik.handleChange}
-          helperText={formik.errors.password}
+          helperText={formik.errors.password || authError}
           error={!!formik.errors.password}
           fullWidth
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setIsPasswordShown((prev) => !prev)}
+                >
+                  {isPasswordShown ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           sx={{
             margin: '10px 0'
           }}
