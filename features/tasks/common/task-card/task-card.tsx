@@ -12,7 +12,7 @@ import classes from './task-card.module.scss'
 export const TaskCard: FC<Task> = ({ taskTextContent, completed, uid }) => {
   const toggleTaskCompletion = async () => {
     await setDoc(
-      doc(firebaseDb, 'tasks', uid),
+      doc(firebaseDb, 'tasks', uid as string),
       {
         completed: !completed
       },
