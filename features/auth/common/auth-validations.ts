@@ -9,5 +9,5 @@ export const authValidation = yup.object().shape({
   password: yup
     .string()
     .required('This field is required')
-    .min(3, 'Min length is 3 symbols')
+    .min(6, 'Min length is 6 characters')
 })

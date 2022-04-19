@@ -1,28 +1,20 @@
 import { useState } from 'react'
-import { getAuth, onAuthStateChanged, User } from '@firebase/auth'
+import { getAuth, onAuthStateChanged } from '@firebase/auth'
+
+import { firebaseApp } from '../configs/firebase'
 
 export const useCheckAuth = () => {
-  const [user, setUser] = useState<User | undefined>()
   const [isAuth, setIsAuth] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  const auth = getAuth()
+  const auth = getAuth(firebaseApp)
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // TODO: взять пользователя из firestore по uid
-      console.log('зареган')
-      setUser(user)
-      setIsAuth(true)
-    } else {
-      console.log('не зареган')
-      setIsAuth(false)
-    }
+    setIsAuth(!!user)
     setIsLoading(false)
   })
 
   return {
     isLoading,
-    isAuth,
-    user,
+    isAuth
   }
 }

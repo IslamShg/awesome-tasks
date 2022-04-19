@@ -1,6 +1,8 @@
 .contentWrapper {
   flex: 1;
   background-color: #181820;
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
 
   .content {
     max-width: 500px;

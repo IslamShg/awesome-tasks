@@ -1,6 +1,30 @@
 .root {
+  display: flex;
+  gap: 10px;
   padding: 15px 15px;
   background-color: #21212B;
   border-radius: 12px;
   color: #fff;
+  transition: .4s ease-in-out;
+
+  .completeTaskBtn {
+    border: 3px solid #D6739E;
+    padding: 5px 9px;
+    border-radius: 10px;
+
+    &.completed {
+      padding: 0;
+      background-color: #D6739E;
+    }
+
+    .icon {
+      color: #000;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.root.completed {
+
 }

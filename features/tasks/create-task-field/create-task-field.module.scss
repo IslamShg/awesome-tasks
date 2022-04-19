@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  gap: 5px;
+  padding: 8px 15px;
+  border: 1px solid #2c2c3c;
+  border-radius: 14px;
+
+  .addBtn {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: #FC76A1;
+
+    .icon {
+      color: #000;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background: #A83D5DFF;
+    }
+  }
+
+  .addTaskInput {
+    color: #fff;
+    height: 26px;
+    font-size: 14px;
+  }
+}

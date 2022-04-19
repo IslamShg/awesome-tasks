@@ -1,0 +1,40 @@
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .popupContainer {
+    padding: 10px 20px;
+    background-color: #272732;
+    width: 500px;
+    border-radius: 4px;
+
+    .inputWrapper {
+      padding-top: 20px;
+      border-color: #fff;
+
+      .MuiOutlinedInput-notchedOutline {
+        border: none;
+      }
+
+      .input {
+        color: #fff;
+        padding: 6px 10px;
+        border: none;
+        font-size: 14px;
+        outline: none;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+
+    .popupBtn {
+      font-size: 10px
+    }
+  }
+}

@@ -1,2 +1,5 @@
 export * from './inbox-tasks'
+export * from './tasks-list'
+export * from './create-task-field'
+export * from './collection-tasks'
 export * from './common'

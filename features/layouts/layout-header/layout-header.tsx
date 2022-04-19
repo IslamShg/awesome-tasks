@@ -4,17 +4,25 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import { useLayoutsActions } from '../common'
 import classes from './layout-header.module.scss'
+import { useGetUser } from '../../auth'
 
 export const LayoutHeader = () => {
   const { toggleSidebar } = useLayoutsActions()
+  const { user } = useGetUser()
 
   return (
     <div className={classes.root}>
-      <IconButton onClick={toggleSidebar} className={classes.burgerMenuButton}>
+      <IconButton
+        onClick={() => toggleSidebar()}
+        className={classes.burgerMenuButton}
+      >
         <MenuIcon className={classes.burgerMenuIcon} />
       </IconButton>
       <Avatar
-        src="https://yt3.ggpht.com/yti/APfAmoFgNsrwAsHKU0CQHIrpb_tEcq53O0LSsOKAYPWfAA=s88-c-k-c0x00ffffff-no-rj-mo"
+        src={
+          user?.avatarUrl ||
+          'https://yantra-bg.ru/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png'
+        }
         alt=""
         className={classes.avatar}
       />

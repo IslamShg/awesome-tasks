@@ -1,10 +1,33 @@
 .root {
   background-color: #21212B;
   width: 250px;
-  height: 100vh;
+  padding-top: 25px;
+  height: calc(100vh - 64px);
   transition: .4s ease-in-out;
 
   &.hidden {
     margin-left: -250px;
+  }
+
+  .sidebarItems {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+
+  .listItem {
+    color: #fff;
+
+    &.selected {
+      background-color: #272732;
+    }
+    &:hover {
+      background-color: #272732;
+    }
+
+
+    .listItemIcon {
+      color: #fff;
+    }
   }
 }
