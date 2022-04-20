@@ -17,9 +17,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const collectionData = {
     collectionName: collectionDocSnap.data()?.collectionName,
     authorUid: collectionDocSnap.data()?.authorUid,
-    dateCreated: collectionDocSnap.data()?.dateCreated,
-    tasks: collectionDocSnap.data()?.tasks,
-    uid: collectionDocSnap.id
+    dateCreated: collectionDocSnap.data()?.dateCreated || null,
+    uid: collectionDocSnap.id,
+    colorVariant: collectionDocSnap.data()?.colorVariant || '#bdc3c7'
   }
 
   return {

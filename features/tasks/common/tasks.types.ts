@@ -15,5 +15,6 @@ export type Collection = {
   authorUid: string
   timestamp?: {}
   dateCreated: number
-  collectionName: string,
+  collectionName: string
+  colorVariant?: string
 }

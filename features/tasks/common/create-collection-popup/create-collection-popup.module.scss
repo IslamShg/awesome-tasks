@@ -25,6 +25,28 @@
         outline: none;
       }
     }
+
+    .colorsVariants {
+      display: flex;
+      flex-wrap: wrap;
+
+      .colorIconBtn {
+        position: relative;
+        padding: 5px;
+
+        .colorIcon {
+        }
+
+        .doneIcon {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          width: 14px;
+          height: 14px;
+          color: #000;
+        }
+      }
+    }
   }
 
   .buttons {

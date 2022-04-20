@@ -26,11 +26,13 @@ export const CreateTaskField: FC<CreateTaskFieldProps> = ({ onAddTask }) => {
         fullWidth
         value={taskTextContent}
         color="primary"
+        variant="standard"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setTaskTextContent(e.target.value)
         }
         className={classes.addTaskInput}
         InputProps={{
+          disableUnderline: true,
           className: classes.addTaskInput
         }}
       />

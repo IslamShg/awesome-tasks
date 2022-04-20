@@ -22,6 +22,7 @@ export const LayoutSidebar = () => {
 
   const collections = useAppSelector(selectCollections)
   useSetCollections()
+  console.log(collections)
 
   return (
     <>
@@ -68,7 +69,10 @@ export const LayoutSidebar = () => {
               })}
             >
               <CircleIcon
-                sx={{ marginRight: 1 }}
+                sx={{
+                  marginRight: 1,
+                  color: collection.colorVariant || '#bdc3c7'
+                }}
                 className={classes.listItemIcon}
               />
               <Typography variant="body2">
