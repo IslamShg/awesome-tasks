@@ -22,7 +22,6 @@ export const LayoutSidebar = () => {
 
   const collections = useAppSelector(selectCollections)
   useSetCollections()
-  console.log(collections)
 
   return (
     <>

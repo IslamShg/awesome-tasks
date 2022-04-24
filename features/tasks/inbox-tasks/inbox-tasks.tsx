@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import { collection, orderBy, query, where } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { Typography } from '@mui/material'
@@ -8,9 +8,14 @@ import { TasksList } from '../tasks-list'
 import classes from './inbox-tasks.module.scss'
 import { CreateTaskField } from '../create-task-field'
 import { firebaseDb } from '../../../configs/firebase'
+import { Task } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
 
-export const InboxTasks = () => {
+type InboxTasksProps = {
+  prefetchedInboxTasks?: Task[]
+}
+
+export const InboxTasks: FC<InboxTasksProps> = ({ prefetchedInboxTasks }) => {
   const userUid = useMemo(() => getAuth().currentUser?.uid, [])
   const tasksQuery = useMemo(
     () =>
@@ -21,7 +26,10 @@ export const InboxTasks = () => {
       ),
     [userUid]
   )
-  const { finishedTasks, unFinishedTasks, tasks } = useTasks(tasksQuery)
+  const { finishedTasks, unFinishedTasks, tasks } = useTasks(
+    tasksQuery,
+    prefetchedInboxTasks
+  )
 
   const handleAddTask = async (taskTextContent: string) => {
     if (!taskTextContent) {

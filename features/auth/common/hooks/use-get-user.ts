@@ -14,13 +14,13 @@ export const useGetUser = () => {
   const userDocRef = useMemo(() => doc(firebaseDb, 'users', userUid || ''), [])
 
   useEffect(() => {
-    const unsub = onSnapshot(userDocRef, (userDoc) => {
+    const unsubscribe = onSnapshot(userDocRef, (userDoc) => {
       console.log('get user snapshot called')
       setUser(userDoc?.data() as User)
       setIsLoading(false)
     })
 
-    return () => unsub()
+    return () => unsubscribe()
   }, [userDocRef])
 
   return {

@@ -4,18 +4,21 @@ import { onSnapshot } from 'firebase/firestore'
 
 import { Task } from '../tasks.types'
 
-export const useTasks = (query: Query<DocumentData>) => {
-  const [tasks, setTasks] = useState<Task[]>()
+export const useTasks = (
+  query: Query<DocumentData>,
+  prefetchedTasks?: Task[]
+) => {
+  const [tasks, setTasks] = useState<Task[]>(prefetchedTasks || [])
 
   useEffect(() => {
-    const unsub = onSnapshot(query, (snapshot) => {
+    const unsubscribe = onSnapshot(query, (snapshot) => {
       const tasks = snapshot.docs.map((doc) => ({
         ...doc.data(),
         uid: doc.id
       }))
       setTasks(tasks as Task[])
     })
-    return () => unsub()
+    return () => unsubscribe()
   }, [query])
 
   const finishedTasks = useMemo(
