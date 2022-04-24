@@ -51,34 +51,36 @@ export const LayoutSidebar = () => {
             <AddIcon sx={{ marginRight: 1 }} className={classes.listItemIcon} />
             <Typography variant="body2">Create collection</Typography>
           </ListItemButton>
-          {collections?.map((collection) => (
-            <ListItemButton
-              key={collection.uid}
-              onClick={() => {
-                router.push({
-                  pathname: '/collections/[collectionUid]',
-                  query: {
-                    collectionUid: collection.uid
-                  }
-                })
-              }}
-              className={clsx(classes.listItem, {
-                [classes.selected]:
-                  router.asPath === `/collections/${collection.uid}`
-              })}
-            >
-              <CircleIcon
-                sx={{
-                  marginRight: 1,
-                  color: collection.colorVariant || '#bdc3c7'
+          <div className={classes.collections}>
+            {collections?.map((collection) => (
+              <ListItemButton
+                key={collection.uid}
+                onClick={() => {
+                  router.push({
+                    pathname: '/collections/[collectionUid]',
+                    query: {
+                      collectionUid: collection.uid
+                    }
+                  })
                 }}
-                className={classes.listItemIcon}
-              />
-              <Typography variant="body2">
-                {collection.collectionName}
-              </Typography>
-            </ListItemButton>
-          ))}
+                className={clsx(classes.listItem, {
+                  [classes.selected]:
+                    router.asPath === `/collections/${collection.uid}`
+                })}
+              >
+                <CircleIcon
+                  sx={{
+                    marginRight: 1,
+                    color: collection.colorVariant || '#bdc3c7'
+                  }}
+                  className={classes.listItemIcon}
+                />
+                <Typography variant="body2">
+                  {collection.collectionName}
+                </Typography>
+              </ListItemButton>
+            ))}
+          </div>
         </div>
       </div>
       <CreateCollectionPopup
