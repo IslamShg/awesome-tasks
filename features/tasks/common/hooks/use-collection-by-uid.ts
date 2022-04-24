@@ -6,14 +6,14 @@ import { Collection } from '../tasks.types'
 
 type HookArgs = {
   collectionUid: string
-  prefetchedCollection: Collection
+  prefetchedCollection?: Collection
 }
 
 export const useCollectionByUid = ({
   collectionUid,
   prefetchedCollection
 }: HookArgs) => {
-  const [selectedCollection, setSelectedCollection] = useState<Collection>(prefetchedCollection)
+  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(prefetchedCollection || null)
 
   useEffect(() => {
     const unsub = onSnapshot(

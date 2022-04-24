@@ -1,27 +1,27 @@
-import { useRouter } from 'next/router'
-import React, { FC, useMemo } from 'react'
+import CircleIcon from '@mui/icons-material/Circle'
 import { Typography } from '@mui/material'
+import { useRouter } from 'next/router'
+import { FC, useMemo } from 'react'
 
-import classes from './collection-tasks.module.scss'
-import { Collection, useCollectionByUid } from '../common'
-import { CreateTaskField } from '../create-task-field'
-import { query, where } from 'firebase/firestore'
 import { addDoc, collection, Timestamp } from '@firebase/firestore'
+import { query, where } from 'firebase/firestore'
 import { firebaseDb } from '../../../configs/firebase'
+import { getUserUid } from '../../../utils/getUserUid'
+import { Collection, useCollectionByUid } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
-import { getAuth } from '@firebase/auth'
+import { CreateTaskField } from '../create-task-field'
 import { TasksList } from '../tasks-list'
+import classes from './collection-tasks.module.scss'
 
 type CollectionTasks = {
-  prefetchedCollection: Collection
+  prefetchedCollection?: Collection
 }
 
 export const CollectionTasks: FC<CollectionTasks> = ({
   prefetchedCollection
 }) => {
   const router = useRouter()
-  const auth = getAuth()
-  const userUid = auth.currentUser?.uid
+  const userUid = getUserUid()
   const collectionUid = router.query.collectionUid
 
   const { collection: selectedCollection } = useCollectionByUid({
@@ -35,7 +35,7 @@ export const CollectionTasks: FC<CollectionTasks> = ({
         collection(firebaseDb, 'tasks'),
         where('collectionUid', '==', collectionUid)
       ),
-    [selectedCollection]
+    [collectionUid]
   )
   const { tasks } = useTasks(collectionTasksQuery)
 
@@ -55,9 +55,18 @@ export const CollectionTasks: FC<CollectionTasks> = ({
 
   return (
     <div className={classes.root}>
-      <Typography variant={'h6'}>
-        {selectedCollection?.collectionName}
-      </Typography>
+      <div className={classes.titleWrapper}>
+        <CircleIcon
+          sx={{
+            marginRight: 1,
+            color: selectedCollection?.colorVariant || '#bdc3c7'
+          }}
+          className={classes.listItemIcon}
+        />
+        <Typography variant={'h6'}>
+          {selectedCollection?.collectionName}
+        </Typography>
+      </div>
       <CreateTaskField onAddTask={handleAddTask} />
       <TasksList tasks={tasks} />
     </div>

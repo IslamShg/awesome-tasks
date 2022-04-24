@@ -1,6 +1,5 @@
 import { getAuth } from 'firebase/auth'
 import { collection, orderBy, query, where } from 'firebase/firestore'
-import { useMemo } from 'react'
 import { firebaseDb } from '../../../configs/firebase'
 
 export const getInboxTasksQuery = () => {

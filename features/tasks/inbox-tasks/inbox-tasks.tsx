@@ -1,6 +1,5 @@
-import React, { FC, useMemo } from 'react'
-import { collection, orderBy, query, where } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import React, { FC } from 'react'
+import { collection } from 'firebase/firestore'
 import { Typography } from '@mui/material'
 import { addDoc, Timestamp } from '@firebase/firestore'
 
@@ -8,26 +7,18 @@ import { TasksList } from '../tasks-list'
 import classes from './inbox-tasks.module.scss'
 import { CreateTaskField } from '../create-task-field'
 import { firebaseDb } from '../../../configs/firebase'
-import { Task } from '../common'
+import { getInboxTasksQuery, Task } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
+import { getUserUid } from '../../../utils/getUserUid'
 
 type InboxTasksProps = {
   prefetchedInboxTasks?: Task[]
 }
 
 export const InboxTasks: FC<InboxTasksProps> = ({ prefetchedInboxTasks }) => {
-  const userUid = useMemo(() => getAuth().currentUser?.uid, [])
-  const tasksQuery = useMemo(
-    () =>
-      query(
-        collection(firebaseDb, 'tasks'),
-        where('authorUid', '==', userUid),
-        orderBy('timestamp', 'desc')
-      ),
-    [userUid]
-  )
+  const userUid = getUserUid()
   const { finishedTasks, unFinishedTasks, tasks } = useTasks(
-    tasksQuery,
+    getInboxTasksQuery(),
     prefetchedInboxTasks
   )
 
