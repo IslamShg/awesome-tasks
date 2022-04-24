@@ -1,24 +1,24 @@
-import { useEffect, useMemo } from 'react'
-import { onSnapshot, query, where } from 'firebase/firestore'
+import { useEffect } from 'react'
+import { onSnapshot, query, where, orderBy } from 'firebase/firestore'
 import { collection } from '@firebase/firestore'
 
 import { Collection } from '../tasks.types'
 import { firebaseDb } from '../../../../configs/firebase'
-import { getAuth } from 'firebase/auth'
 import { useTasksActions } from '../tasks.slice'
+import { getUserUid } from '../../../../utils/getUserUid'
 
 export const useSetCollections = () => {
-  const auth = getAuth()
-  const userUid = useMemo(() => auth.currentUser?.uid, [])
+  const userUid = getUserUid()
   const { setCollections } = useTasksActions()
 
   useEffect(() => {
     const collectionsQuery = query(
       collection(firebaseDb, 'collections'),
-      where('authorUid', '==', userUid)
+      where('authorUid', '==', userUid),
+      orderBy('timestamp', 'desc')
     )
 
-    const unsub = onSnapshot(collectionsQuery, (snapshot) => {
+    const unsubscribe = onSnapshot(collectionsQuery, (snapshot) => {
       const collectionsData = snapshot.docs.map((doc) => ({
         ...doc.data(),
         timestamp: undefined,
@@ -26,6 +26,6 @@ export const useSetCollections = () => {
       }))
       setCollections(collectionsData as Collection[])
     })
-    return () => unsub()
+    return unsubscribe
   }, [userUid])
 }
