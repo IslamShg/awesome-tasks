@@ -2,9 +2,9 @@ import CircleIcon from '@mui/icons-material/Circle'
 import { Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
-
+import { query, where, orderBy } from 'firebase/firestore'
 import { addDoc, collection, Timestamp } from '@firebase/firestore'
-import { query, where } from 'firebase/firestore'
+
 import { firebaseDb } from '../../../configs/firebase'
 import { getUserUid } from '../../../utils/getUserUid'
 import { Collection, useCollectionByUid } from '../common'
@@ -33,7 +33,8 @@ export const CollectionTasks: FC<CollectionTasks> = ({
     () =>
       query(
         collection(firebaseDb, 'tasks'),
-        where('collectionUid', '==', collectionUid)
+        where('collectionUid', '==', collectionUid),
+        orderBy('timestamp', 'desc')
       ),
     [collectionUid]
   )

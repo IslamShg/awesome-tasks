@@ -12,8 +12,8 @@ export const CreateTaskField: FC<CreateTaskFieldProps> = ({ onAddTask }) => {
   const [taskTextContent, setTaskTextContent] = useState('')
 
   const addTask = async () => {
-    await onAddTask(taskTextContent)
     setTaskTextContent('')
+    await onAddTask(taskTextContent)
   }
 
   return (
@@ -26,6 +26,11 @@ export const CreateTaskField: FC<CreateTaskFieldProps> = ({ onAddTask }) => {
         fullWidth
         value={taskTextContent}
         color="primary"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            addTask()
+          }
+        }}
         variant="standard"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setTaskTextContent(e.target.value)

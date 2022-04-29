@@ -19,7 +19,7 @@ export const useCollectionByUid = ({
     const unsub = onSnapshot(
       doc(firebaseDb, 'collections', collectionUid),
       (docSnap) => {
-        console.log('get collection called')
+        console.log('get collection hook called')
         const collectionData = {
           ...docSnap.data(),
           uid: docSnap.id
