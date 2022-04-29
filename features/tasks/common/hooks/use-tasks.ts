@@ -12,6 +12,7 @@ export const useTasks = (
 
   useEffect(() => {
     const unsubscribe = onSnapshot(query, (snapshot) => {
+      console.log('get tasks hook called')
       const tasks = snapshot.docs.map((doc) => ({
         ...doc.data(),
         uid: doc.id

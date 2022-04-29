@@ -30,7 +30,6 @@ export const useLoginUser = () => {
       setUser(userCreds)
       setStatus('success')
     } catch (e: any) {
-      console.log(e?.message, e?.code)
       const errorCode: keyof typeof AUTH_ERRORS_CODES = e?.code
       setStatus('error')
       setErrorText(AUTH_ERRORS_CODES[errorCode] || 'Произошла ошибка')

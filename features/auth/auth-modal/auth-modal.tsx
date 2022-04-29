@@ -39,7 +39,6 @@ export const AuthModal = () => {
       if (errorText) {
         setAuthError(errorText)
         formik.setFieldError('password', errorText)
-        console.log('error')
       }
     }
   })

@@ -7,7 +7,7 @@ import { TasksList } from '../tasks-list'
 import classes from './inbox-tasks.module.scss'
 import { CreateTaskField } from '../create-task-field'
 import { firebaseDb } from '../../../configs/firebase'
-import { getInboxTasksQuery, Task } from '../common'
+import { useInboxTasksQuery, Task } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
 import { getUserUid } from '../../../utils/getUserUid'
 
@@ -18,7 +18,7 @@ type InboxTasksProps = {
 export const InboxTasks: FC<InboxTasksProps> = ({ prefetchedInboxTasks }) => {
   const userUid = getUserUid()
   const { finishedTasks, unFinishedTasks, tasks } = useTasks(
-    getInboxTasksQuery(),
+    useInboxTasksQuery(),
     prefetchedInboxTasks
   )
 
