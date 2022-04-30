@@ -24,6 +24,7 @@ export const TaskCard: FC<Task> = ({ taskTextContent, completed, uid }) => {
     <div className={classes.root}>
       <IconButton
         onClick={toggleTaskCompletion}
+        role="checkbox"
         className={clsx(classes.completeTaskBtn, {
           [classes.completed]: completed
         })}

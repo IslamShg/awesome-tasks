@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
+
 import { useLayoutsActions } from '../features/layouts'
 
 export const useGlobalShortcuts = () => {
@@ -10,16 +11,28 @@ export const useGlobalShortcuts = () => {
     (e: KeyboardEvent) => {
       if (ctrlKeys.includes(prevClickedKey.current) && e.key === '\\') {
         toggleSidebar()
-        prevClickedKey.current = ''
         return
       }
       prevClickedKey.current = e.key
+    },
+    [ctrlKeys, toggleSidebar]
+  )
+
+  const onKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (ctrlKeys.includes(prevClickedKey.current)) {
+        prevClickedKey.current = ''
+      }
     },
     [ctrlKeys]
   )
 
   useEffect(() => {
     window.addEventListener('keydown', onKeyPress)
-    return () => window.removeEventListener('keydown', onKeyPress)
-  }, [onKeyPress])
+    window.addEventListener('keyup', onKeyUp)
+    return () => {
+      window.removeEventListener('keydown', onKeyPress)
+      window.removeEventListener('keydown', onKeyUp)
+    }
+  }, [onKeyPress, onKeyUp])
 }
