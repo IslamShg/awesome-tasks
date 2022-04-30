@@ -3,15 +3,15 @@ import { Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 import { query, where, orderBy } from 'firebase/firestore'
-import { addDoc, collection, Timestamp } from '@firebase/firestore'
+import { collection } from '@firebase/firestore'
 
 import { firebaseDb } from '../../../configs/firebase'
-import { getUserUid } from '../../../utils/getUserUid'
 import { Collection, useCollectionByUid } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
 import { CreateTaskField } from '../create-task-field'
 import { TasksList } from '../tasks-list'
 import classes from './collection-tasks.module.scss'
+import { useCreateTask } from '../common/hooks/use-create-task'
 
 type CollectionTasks = {
   prefetchedCollection?: Collection
@@ -21,7 +21,6 @@ export const CollectionTasks: FC<CollectionTasks> = ({
   prefetchedCollection
 }) => {
   const router = useRouter()
-  const userUid = getUserUid()
   const collectionUid = router.query.collectionUid
 
   const { collection: selectedCollection } = useCollectionByUid({
@@ -38,21 +37,9 @@ export const CollectionTasks: FC<CollectionTasks> = ({
       ),
     [collectionUid]
   )
-  const { tasks } = useTasks(collectionTasksQuery)
 
-  const handleAddTask = async (taskTextContent: string) => {
-    if (!taskTextContent) {
-      return
-    }
-    await addDoc(collection(firebaseDb, 'tasks'), {
-      authorUid: userUid,
-      taskTextContent: taskTextContent,
-      timestamp: Timestamp.now(),
-      dateCreated: Date.now(),
-      completed: false,
-      collectionUid
-    })
-  }
+  const { tasks } = useTasks(collectionTasksQuery)
+  const handleAddTask = useCreateTask()
 
   return (
     <div className={classes.root}>
