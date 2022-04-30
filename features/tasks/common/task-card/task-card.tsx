@@ -2,23 +2,13 @@ import React, { FC } from 'react'
 import { IconButton, Typography } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
 import clsx from 'clsx'
-import { setDoc } from '@firebase/firestore'
-import { doc } from 'firebase/firestore'
 
-import { firebaseDb } from '../../../../configs/firebase'
 import { Task } from '../tasks.types'
 import classes from './task-card.module.scss'
+import { useToggleTaskCompletion } from '../hooks'
 
 export const TaskCard: FC<Task> = ({ taskTextContent, completed, uid }) => {
-  const toggleTaskCompletion = async () => {
-    await setDoc(
-      doc(firebaseDb, 'tasks', uid as string),
-      {
-        completed: !completed
-      },
-      { merge: true }
-    )
-  }
+  const toggleTaskCompletion = useToggleTaskCompletion(uid as string, completed)
 
   return (
     <div className={classes.root}>
