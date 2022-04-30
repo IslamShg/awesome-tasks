@@ -2,9 +2,9 @@ export type Task = {
   uid?: string
   authorUid: string
   taskTextContent: string
-  dateCreated: number
-  timestamp?: {}
-  completed: boolean
+  dateCreated?: number
+  timestamp?: object
+  completed?: boolean
   dueBy?: number
   subTasks?: []
   collectionUid?: string
@@ -13,7 +13,7 @@ export type Task = {
 export type Collection = {
   uid?: string
   authorUid: string
-  timestamp?: {}
+  timestamp?: object
   dateCreated: number
   collectionName: string
   colorVariant?: string

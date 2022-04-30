@@ -1,39 +1,24 @@
 import React, { FC } from 'react'
-import { collection } from 'firebase/firestore'
 import { Typography } from '@mui/material'
-import { addDoc, Timestamp } from '@firebase/firestore'
 
 import { TasksList } from '../tasks-list'
 import classes from './inbox-tasks.module.scss'
 import { CreateTaskField } from '../create-task-field'
-import { firebaseDb } from '../../../configs/firebase'
 import { useInboxTasksQuery, Task } from '../common'
 import { useTasks } from '../common/hooks/use-tasks'
-import { getUserUid } from '../../../utils/getUserUid'
+import { useCreateTask } from '../common/hooks/use-create-task'
 
 type InboxTasksProps = {
   prefetchedInboxTasks?: Task[]
 }
 
 export const InboxTasks: FC<InboxTasksProps> = ({ prefetchedInboxTasks }) => {
-  const userUid = getUserUid()
   const { finishedTasks, unFinishedTasks, tasks } = useTasks(
     useInboxTasksQuery(),
     prefetchedInboxTasks
   )
 
-  const handleAddTask = async (taskTextContent: string) => {
-    if (!taskTextContent) {
-      return
-    }
-    await addDoc(collection(firebaseDb, 'tasks'), {
-      authorUid: userUid,
-      taskTextContent: taskTextContent,
-      timestamp: Timestamp.now(),
-      dateCreated: Date.now(),
-      completed: false
-    })
-  }
+  const handleAddTask = useCreateTask()
 
   return (
     <div className={classes.root}>
