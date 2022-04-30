@@ -8,7 +8,7 @@ import classes from './task-card.module.scss'
 import { useToggleTaskCompletion } from '../hooks'
 
 export const TaskCard: FC<Task> = ({ taskTextContent, completed, uid }) => {
-  const toggleTaskCompletion = useToggleTaskCompletion(uid as string, completed)
+  const toggleTaskCompletion = useToggleTaskCompletion(uid as string, completed as boolean)
 
   return (
     <div className={classes.root}>
